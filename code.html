@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💻 الكود — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .code-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .code-header h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .code-header h1 i {
+            color: var(--accent);
+        }
+        .code-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+        .code-breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .code-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .code-file-list {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .code-file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .code-file-item:last-child {
+            border-bottom: none;
+        }
+        .code-file-item:hover {
+            background: var(--bg-hover);
+        }
+        .code-file-item i {
+            font-size: 16px;
+            color: var(--text-muted);
+            width: 20px;
+        }
+        .code-file-item .file-name {
+            flex: 1;
+            font-size: 14px;
+        }
+        .code-file-item .file-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .code-viewer {
+            margin-top: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .code-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-tertiary);
+        }
+        .code-viewer-header .filename {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .code-viewer-body {
+            padding: 16px;
+            overflow: auto;
+            max-height: 500px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+        .code-viewer-body .line-numbers {
+            color: var(--text-muted);
+            user-select: none;
+            padding-right: 12px;
+            border-right: 1px solid var(--border-color);
+            margin-right: 12px;
+        }
+        .code-viewer-body pre {
+            display: flex;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .empty-code {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-code i {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="code-container">
+        <div class="code-header">
+            <h1><i class="fas fa-code"></i> الكود</h1>
+            <div class="code-breadcrumb">
+                <a href="/">الرئيسية</a>
+                <span>/</span>
+                <a href="/username">المستخدم</a>
+                <span>/</span>
+                <span style="color: var(--text-primary);">المستودع</span>
+            </div>
+        </div>
+
+        <div class="code-file-list" id="codeFileList">
+            <div class="code-file-item" onclick="viewFile('README.md')">
+                <i class="fas fa-file-alt"></i>
+                <span class="file-name">README.md</span>
+                <span class="file-meta">3 أيام</span>
+                <span class="file-meta">2.4 KB</span>
+            </div>
+            <div class="code-file-item" onclick="viewFile('package.json')">
+                <i class="fas fa-file-code"></i>
+                <span class="file-name">package.json</span>
+                <span class="file-meta">5 أيام</span>
+                <span class="file-meta">1.2 KB</span>
+            </div>
+            <div class="code-file-item" onclick="viewFile('src/index.js')">
+                <i class="fas fa-folder"></i>
+                <span class="file-name">src/</span>
+                <span class="file-meta">7 أيام</span>
+                <span class="file-meta">—</span>
+            </div>
+            <div class="code-file-item" onclick="viewFile('src/utils.js')">
+                <i class="fas fa-file-code"></i>
+                <span class="file-name">src/utils.js</span>
+                <span class="file-meta">2 أيام</span>
+                <span class="file-meta">3.8 KB</span>
+            </div>
+            <div class="code-file-item" onclick="viewFile('tests/')">
+                <i class="fas fa-folder"></i>
+                <span class="file-name">tests/</span>
+                <span class="file-meta">4 أيام</span>
+                <span class="file-meta">—</span>
+            </div>
+        </div>
+
+        <div class="code-viewer" id="codeViewer">
+            <div class="code-viewer-header">
+                <span class="filename"><i class="fas fa-file-alt"></i> README.md</span>
+                <button class="btn btn-outline btn-small" onclick="copyCode()">
+                    <i class="fas fa-copy"></i> نسخ
+                </button>
+            </div>
+            <div class="code-viewer-body">
+                <pre><span class="line-numbers">1</span> # GitHub Clone
+                <span class="line-numbers">2</span> 
+                <span class="line-numbers">3</span> منصة تطوير برمجيات متكاملة
+                <span class="line-numbers">4</span> 
+                <span class="line-numbers">5</span> ## الميزات
+                <span class="line-numbers">6</span> - 🐙 مستودعات عامة وخاصة
+                <span class="line-numbers">7</span> - 📋 قضايا وطلبات سحب
+                <span class="line-numbers">8</span> - 🚀 GitHub Actions
+                <span class="line-numbers">9</span> - 🤖 GitHub Copilot
+                <span class="line-numbers">10</span> - 🔒 أمان متكامل
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        function viewFile(filename) {
+            const viewer = document.getElementById('codeViewer');
+            const header = viewer.querySelector('.filename');
+            const body = viewer.querySelector('.code-viewer-body');
+            
+            header.innerHTML = `<i class="fas fa-file-alt"></i> ${filename}`;
+            
+            // محاكاة محتوى الملف
+            body.innerHTML = `
+                <pre><span class="line-numbers">1</span> // ${filename}
+                <span class="line-numbers">2</span> 
+                <span class="line-numbers">3</span> function hello() {
+                <span class="line-numbers">4</span>     console.log("Hello, World!");
+                <span class="line-numbers">5</span> }
+                <span class="line-numbers">6</span> 
+                <span class="line-numbers">7</span> hello();
+                </pre>
+            `;
+        }
+
+        function copyCode() {
+            const code = document.querySelector('.code-viewer-body pre');
+            if (!code) return;
+            
+            navigator.clipboard.writeText(code.textContent).then(() => {
+                alert('📋 تم نسخ الكود');
+            }).catch(() => {
+                const range = document.createRange();
+                range.selectNode(code);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                alert('📋 تم نسخ الكود');
+            });
+        }
+    </script>
+</body>
+</html>

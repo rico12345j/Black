@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 الأكثر شيوعاً — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .trending-container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+        .trending-header { margin-bottom: 24px; }
+        .trending-header h1 { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .trending-header h1 i { color: var(--accent); }
+        .trending-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .trending-filters select { padding: 6px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius); color: var(--text-primary); font-size: 13px; font-family: var(--font); outline: none; }
+        .trending-item { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+        .trending-item .rank { font-size: 18px; font-weight: 800; color: var(--text-muted); width: 30px; text-align: center; }
+        .trending-item .info { flex: 1; }
+        .trending-item .info .name { font-weight: 600; color: var(--accent); text-decoration: none; }
+        .trending-item .info .desc { color: var(--text-secondary); font-size: 13px; }
+        .trending-item .info .meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .trending-item .stars { color: var(--text-muted); font-size: 14px; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">...</nav>
+    <div class="trending-container">
+        <div class="trending-header"><h1><i class="fas fa-fire"></i> الأكثر شيوعاً</h1></div>
+        <div class="trending-filters">
+            <select><option>اليوم</option><option>هذا الأسبوع</option><option>هذا الشهر</option></select>
+            <select><option>الكل</option><option>JavaScript</option><option>Python</option><option>TypeScript</option></select>
+        </div>
+        <div id="trendingList">
+            <div class="trending-item"><div class="rank">#1</div><div class="info"><a href="#" class="name">facebook/react</a><div class="desc">مكتبة JavaScript لبناء واجهات المستخدم</div><div class="meta">⭐ 45.2K · JavaScript · تم التحديث منذ 3 ساعات</div></div><div class="stars">⭐ 45.2K</div></div>
+            <div class="trending-item"><div class="rank">#2</div><div class="info"><a href="#" class="name">vuejs/vue</a><div class="desc">إطار عمل JavaScript تقدمي</div><div class="meta">⭐ 38.7K · JavaScript · تم التحديث منذ 5 ساعات</div></div><div class="stars">⭐ 38.7K</div></div>
+            <div class="trending-item"><div class="rank">#3</div><div class="info"><a href="#" class="name">angular/angular</a><div class="desc">منصة تطوير تطبيقات الويب</div><div class="meta">⭐ 29.1K · TypeScript · تم التحديث منذ 12 ساعة</div></div><div class="stars">⭐ 29.1K</div></div>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+</body>
+</html>

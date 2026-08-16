@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 استكشاف — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .explore-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .explore-header {
+            margin-bottom: 24px;
+        }
+        .explore-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .explore-header h1 i {
+            color: var(--accent);
+        }
+        .explore-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-top: 4px;
+        }
+        .explore-tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .explore-tab {
+            padding: 8px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .explore-tab:hover {
+            color: var(--text-primary);
+        }
+        .explore-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent);
+        }
+        .explore-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+        .repo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .repo-list .repo-card {
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+        .repo-list .repo-card:hover {
+            border-color: var(--accent);
+        }
+        .repo-list .repo-card .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .repo-list .repo-card .repo-name {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .repo-list .repo-card .repo-name:hover {
+            color: var(--accent-hover);
+        }
+        .repo-list .repo-card .repo-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 4px 0 8px;
+        }
+        .repo-list .repo-card .repo-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        .repo-list .repo-card .repo-meta .language-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 4px;
+        }
+        .explore-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .explore-sidebar .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+        .explore-sidebar .sidebar-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .explore-sidebar .sidebar-card .topic {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin: 2px 4px 2px 0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .explore-sidebar .sidebar-card .topic:hover {
+            background: var(--accent);
+            color: var(--text-inverse);
+        }
+        .explore-sidebar .sidebar-card .trending-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+        .explore-sidebar .sidebar-card .trending-item:last-child {
+            border-bottom: none;
+        }
+        .explore-sidebar .sidebar-card .trending-item .stars {
+            color: var(--text-muted);
+        }
+        @media (max-width: 768px) {
+            .explore-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link active">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="explore-container">
+        <div class="explore-header">
+            <h1><i class="fas fa-compass"></i> استكشاف</h1>
+            <p>اكتشف مشاريع مفتوحة المصدر، وتابع اتجاهات التطوير، وابحث عن الإلهام</p>
+        </div>
+
+        <div class="explore-tabs">
+            <a href="#" class="explore-tab active">المستودعات الشائعة</a>
+            <a href="#" class="explore-tab">الأكثر نجمة</a>
+            <a href="#" class="explore-tab">الأحدث</a>
+            <a href="#" class="explore-tab">المتابَعون</a>
+        </div>
+
+        <div class="explore-grid">
+            <div class="repo-list" id="repoList">
+                <!-- سيتم عرض المستودعات هنا -->
+            </div>
+
+            <div class="explore-sidebar">
+                <div class="sidebar-card">
+                    <h3>🏷️ المواضيع الشائعة</h3>
+                    <span class="topic">javascript</span>
+                    <span class="topic">python</span>
+                    <span class="topic">react</span>
+                    <span class="topic">nodejs</span>
+                    <span class="topic">typescript</span>
+                    <span class="topic">docker</span>
+                    <span class="topic">kubernetes</span>
+                    <span class="topic">ai</span>
+                    <span class="topic">machine-learning</span>
+                    <span class="topic">blockchain</span>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>🔥 الأكثر شيوعاً</h3>
+                    <div class="trending-item">
+                        <span>react</span>
+                        <span class="stars">⭐ 45.2K</span>
+                    </div>
+                    <div class="trending-item">
+                        <span>vue</span>
+                        <span class="stars">⭐ 38.7K</span>
+                    </div>
+                    <div class="trending-item">
+                        <span>angular</span>
+                        <span class="stars">⭐ 29.1K</span>
+                    </div>
+                    <div class="trending-item">
+                        <span>svelte</span>
+                        <span class="stars">⭐ 18.6K</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        // ===== بيانات وهمية للمستودعات =====
+        const repositories = [
+            {
+                name: 'react',
+                owner: 'facebook',
+                description: 'مكتبة JavaScript لبناء واجهات المستخدم',
+                stars: '45.2K',
+                forks: '12.3K',
+                language: 'JavaScript',
+                languageColor: '#f1e05a',
+                updated: 'منذ 3 أيام'
+            },
+            {
+                name: 'vue',
+                owner: 'vuejs',
+                description: 'إطار عمل JavaScript تقدمي لبناء واجهات المستخدم',
+                stars: '38.7K',
+                forks: '8.9K',
+                language: 'JavaScript',
+                languageColor: '#41b883',
+                updated: 'منذ 5 أيام'
+            },
+            {
+                name: 'angular',
+                owner: 'angular',
+                description: 'منصة تطوير تطبيقات الويب',
+                stars: '29.1K',
+                forks: '7.2K',
+                language: 'TypeScript',
+                languageColor: '#3178c6',
+                updated: 'منذ أسبوع'
+            },
+            {
+                name: 'django',
+                owner: 'django',
+                description: 'إطار عمل Python عالي المستوى',
+                stars: '22.4K',
+                forks: '5.6K',
+                language: 'Python',
+                languageColor: '#3572A5',
+                updated: 'منذ 4 أيام'
+            },
+            {
+                name: 'flutter',
+                owner: 'flutter',
+                description: 'إطار عمل لتطوير تطبيقات متعددة المنصات',
+                stars: '19.8K',
+                forks: '4.1K',
+                language: 'Dart',
+                languageColor: '#00B4AB',
+                updated: 'منذ يومين'
+            }
+        ];
+
+        // ===== عرض المستودعات =====
+        function renderRepos() {
+            const container = document.getElementById('repoList');
+            if (!container) return;
+
+            container.innerHTML = repositories.map(repo => `
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <a href="/${repo.owner}/${repo.name}" class="repo-name">
+                            <i class="fas fa-book"></i> ${repo.owner}/${repo.name}
+                        </a>
+                        <span style="font-size: 12px; color: var(--text-muted);">
+                            ⭐ ${repo.stars}
+                        </span>
+                    </div>
+                    <div class="repo-description">${repo.description}</div>
+                    <div class="repo-meta">
+                        <span>
+                            <span class="language-dot" style="background-color: ${repo.languageColor}"></span>
+                            ${repo.language}
+                        </span>
+                        <span>🍴 ${repo.forks}</span>
+                        <span>🕐 ${repo.updated}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== التهيئة =====
+        document.addEventListener('DOMContentLoaded', renderRepos);
+
+        // ===== تصدير للاستخدام =====
+        window.renderRepos = renderRepos;
+    </script>
+</body>
+</html>

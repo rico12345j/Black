@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐙 GitHub · Change is constant. GitHub keeps you ahead.</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ===== شريط التنقل ===== -->
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <div class="nav-left">
+            <a href="/" class="nav-logo">
+                <i class="fab fa-github"></i>
+                <span>GitHub</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/features" class="nav-link">المنتجات</a>
+                <a href="/solutions" class="nav-link">الحلول</a>
+                <a href="/resources" class="nav-link">الموارد</a>
+                <a href="/pricing" class="nav-link">التسعير</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="globalSearch" placeholder="🔍 بحث عن مستودعات، قضايا، وكود..." onfocus="this.select()">
+            </div>
+            <div class="nav-actions">
+                <a href="/login" class="btn btn-outline">تسجيل الدخول</a>
+                <a href="/signup" class="btn btn-primary">التسجيل</a>
+            </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ===== البانر الرئيسي ===== -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    Change is constant.<br>
+                    <span class="gradient-text">GitHub keeps you ahead.</span>
+                </h1>
+                <p class="hero-description">
+                    Tools and trends evolve, but collaboration endures. With GitHub, 
+                    developers, agents, and code come together on one platform.
+                </p>
+                <div class="hero-actions">
+                    <a href="/signup" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Get started with GitHub
+                    </a>
+                    <a href="/explore" class="btn btn-outline btn-large">
+                        <i class="fas fa-compass"></i>
+                        Explore
+                    </a>
+                </div>
+                <div class="hero-search">
+                    <div class="search-box-large">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="heroSearch" placeholder="Search for repositories, issues, and code..." onfocus="this.select()">
+                    </div>
+                </div>
+            </div>
+            <div class="hero-illustration">
+                <div class="hero-code">
+                    <div class="code-line"><span class="keyword">function</span> <span class="function">collaborate</span>() {</div>
+                    <div class="code-line indent-1"><span class="keyword">const</span> <span class="variable">team</span> = <span class="string">"developers"</span>;</div>
+                    <div class="code-line indent-1"><span class="keyword">const</span> <span class="variable">code</span> = <span class="keyword">await</span> <span class="function">write</span>();</div>
+                    <div class="code-line indent-1"><span class="keyword">return</span> <span class="variable">code</span> <span class="operator">+</span> <span class="string">" ✅"</span>;</div>
+                    <div class="code-line">}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== قسم الميزات ===== -->
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">منصة واحدة لكل احتياجاتك</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>GitHub Copilot</h3>
+                <p>Write, test, and fix code quickly with GitHub Copilot, from simple boilerplate to complex features.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>CI/CD</h3>
+                <p>Ship faster with secure, reliable CI/CD. Launch a full, cloud-based development environment in seconds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>الأمان الذكي</h3>
+                <p>Use AI to find and fix vulnerabilities so your team can ship more secure software faster.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>التطبيق الجوال</h3>
+                <p>Manage projects and assign tasks to Copilot, all from your mobile device.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>GitHub Actions</h3>
+                <p>Extend your stack with apps, actions, and AI models. Automate your workflow from code to cloud.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>أمان المؤسسة</h3>
+                <p>Security debt, solved. Leverage security campaigns and Copilot Autofix to reduce application vulnerabilities.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== قسم الإحصائيات ===== -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">8.3M</div>
+                <div class="stat-label">secret leaks stopped in the past 12 months</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">70%</div>
+                <div class="stat-label">MTTR reduction with Copilot Autofix</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">25%</div>
+                <div class="stat-label">speed boost with GitHub Copilot</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== قسم الشهادات ===== -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">الثقة من رواد الصناعة</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-company">Duolingo</div>
+                <p>"25% boost with GitHub Copilot"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-company">Figma</div>
+                <p>"Streamlines development and strengthens security"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-company">Mercedes-Benz</div>
+                <p>"Standardizes source code and automates onboarding"</p>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-company">Mercado Libre</div>
+                <p>"Cuts coding time by 50%"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== التذييل ===== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>المنتجات</h4>
+                <a href="#">GitHub Copilot</a>
+                <a href="#">GitHub Actions</a>
+                <a href="#">GitHub Packages</a>
+                <a href="#">GitHub Codespaces</a>
+                <a href="#">GitHub Mobile</a>
+            </div>
+            <div class="footer-column">
+                <h4>الحلول</h4>
+                <a href="#">المطورون</a>
+                <a href="#">الفرق</a>
+                <a href="#">المؤسسات</a>
+                <a href="#">المصادر المفتوحة</a>
+                <a href="#">الحكومة</a>
+            </div>
+            <div class="footer-column">
+                <h4>الموارد</h4>
+                <a href="#">التوثيق</a>
+                <a href="#">المدونة</a>
+                <a href="#">التعلم</a>
+                <a href="#">المجتمع</a>
+                <a href="#">الدعم</a>
+            </div>
+            <div class="footer-column">
+                <h4>الشركة</h4>
+                <a href="#">حول</a>
+                <a href="#">الوظائف</a>
+                <a href="#">المدونة</a>
+                <a href="#">المساعدات</a>
+                <a href="#">اتصل بنا</a>
+            </div>
+            <div class="footer-column">
+                <h4>التواصل الاجتماعي</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+            <div class="footer-links">
+                <a href="#">الشروط</a>
+                <a href="#">الخصوصية</a>
+                <a href="#">الأمان</a>
+                <a href="#">الحالة</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== السكريبتات ===== -->
+<script src="/js/script.js"></script>
+<script>
+    // ===== البحث في الهيرو =====
+    document.getElementById('heroSearch')?.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const query = this.value.trim();
+            if (query) {
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+
+    // ===== البحث العام =====
+    document.getElementById('globalSearch')?.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const query = this.value.trim();
+            if (query) {
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+
+    // ===== القائمة الجانبية للجوال =====
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
+        const navLinks = document.getElementById('navLinks');
+        if (navLinks) {
+            const isVisible = navLinks.style.display === 'flex';
+            navLinks.style.display = isVisible ? 'none' : 'flex';
+            this.innerHTML = isVisible ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 البحث — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .search-container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+        .search-header { margin-bottom: 20px; }
+        .search-header .search-box-large { display: flex; align-items: center; background: var(--bg-tertiary); border: 2px solid var(--border-color); border-radius: var(--radius-lg); padding: 8px 16px; transition: var(--transition); }
+        .search-header .search-box-large:focus-within { border-color: var(--accent); }
+        .search-header .search-box-large i { color: var(--text-muted); font-size: 18px; }
+        .search-header .search-box-large input { flex: 1; background: transparent; border: none; color: var(--text-primary); padding: 8px 12px; font-size: 16px; outline: none; font-family: var(--font); }
+        .search-filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+        .search-filters .filter-btn { padding: 4px 14px; border-radius: 20px; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 13px; transition: var(--transition); }
+        .search-filters .filter-btn:hover { color: var(--text-primary); border-color: var(--text-muted); }
+        .search-filters .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .search-results .result-item { padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+        .search-results .result-item .title { font-weight: 600; color: var(--accent); text-decoration: none; }
+        .search-results .result-item .title:hover { text-decoration: underline; }
+        .search-results .result-item .desc { color: var(--text-secondary); font-size: 14px; margin-top: 2px; }
+        .search-results .result-item .meta { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .empty-search { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
+        .empty-search i { font-size: 64px; color: var(--text-muted); margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">...</nav>
+    <div class="search-container">
+        <div class="search-header">
+            <div class="search-box-large">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="🔍 بحث عن مستودعات، قضايا، مستخدمين..." value="react" oninput="performSearch(this.value)">
+            </div>
+            <div class="search-filters">
+                <button class="filter-btn active" onclick="filterSearch('all', this)">الكل</button>
+                <button class="filter-btn" onclick="filterSearch('repositories', this)">مستودعات</button>
+                <button class="filter-btn" onclick="filterSearch('issues', this)">قضايا</button>
+                <button class="filter-btn" onclick="filterSearch('users', this)">مستخدمين</button>
+            </div>
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="result-item">
+                <a href="#" class="title">facebook/react</a>
+                <div class="desc">مكتبة JavaScript لبناء واجهات المستخدم</div>
+                <div class="meta">⭐ 45.2K · JavaScript · تم التحديث منذ 3 أيام</div>
+            </div>
+            <div class="result-item">
+                <a href="#" class="title">vuejs/vue</a>
+                <div class="desc">إطار عمل JavaScript تقدمي</div>
+                <div class="meta">⭐ 38.7K · JavaScript · تم التحديث منذ 5 أيام</div>
+            </div>
+            <div class="result-item">
+                <a href="#" class="title">angular/angular</a>
+                <div class="desc">منصة تطوير تطبيقات الويب</div>
+                <div class="meta">⭐ 29.1K · TypeScript · تم التحديث منذ أسبوع</div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+    <script>
+        function performSearch(query) {
+            const container = document.getElementById('searchResults');
+            if (!query.trim()) {
+                container.innerHTML = `<div class="empty-search"><i class="fas fa-search"></i><p>ابحث عن أي شيء...</p></div>`;
+                return;
+            }
+            container.innerHTML = `
+                <div class="result-item"><a href="#" class="title">نتيجة البحث عن "${query}"</a>
+                <div class="desc">تم العثور على 5 نتائج</div>
+                <div class="meta">⭐ 1.2K · JavaScript · منذ يوم</div></div>
+                <div class="result-item"><a href="#" class="title">مشروع آخر</a>
+                <div class="desc">وصف المشروع</div>
+                <div class="meta">⭐ 800 · Python · منذ 3 أيام</div></div>
+            `;
+        }
+        function filterSearch(type, btn) {
+            document.querySelectorAll('.search-filters .filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            alert(`🔍 تصفية حسب: ${type}`);
+        }
+    </script>
+</body>
+</html>

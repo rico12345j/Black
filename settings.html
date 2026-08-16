@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ الإعدادات — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .settings-container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+        .settings-header { margin-bottom: 24px; }
+        .settings-header h1 { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .settings-header h1 i { color: var(--accent); }
+        .settings-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; flex-wrap: wrap; }
+        .settings-tab { padding: 8px 16px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 14px; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .settings-tab:hover { color: var(--text-primary); }
+        .settings-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+        .settings-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+        .settings-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .settings-section .form-group { margin-bottom: 12px; }
+        .settings-section label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .settings-section input, .settings-section select { width: 100%; padding: 8px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius); color: var(--text-primary); font-size: 14px; font-family: var(--font); outline: none; transition: var(--transition); }
+        .settings-section input:focus, .settings-section select:focus { border-color: var(--accent); }
+        .settings-section .preference-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+        .settings-section .preference-item:last-child { border-bottom: none; }
+        .settings-section .preference-item .info { flex: 1; }
+        .settings-section .preference-item .info h4 { font-size: 14px; font-weight: 600; }
+        .settings-section .preference-item .info p { font-size: 12px; color: var(--text-secondary); }
+        .toggle-switch { width: 40px; height: 22px; background: var(--bg-tertiary); border-radius: 11px; cursor: pointer; transition: var(--transition); position: relative; flex-shrink: 0; }
+        .toggle-switch.active { background: var(--accent); }
+        .toggle-switch .toggle-dot { width: 18px; height: 18px; background: #fff; border-radius: 50%; position: absolute; top: 2px; right: 2px; transition: var(--transition); }
+        .toggle-switch.active .toggle-dot { right: 20px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">...</nav>
+    <div class="settings-container">
+        <div class="settings-header"><h1><i class="fas fa-cog"></i> الإعدادات</h1></div>
+        <div class="settings-tabs">
+            <a href="#" class="settings-tab active">الملف الشخصي</a>
+            <a href="#" class="settings-tab">الحساب</a>
+            <a href="#" class="settings-tab">الإشعارات</a>
+            <a href="#" class="settings-tab">المظهر</a>
+        </div>
+        <div class="settings-section">
+            <h3>الملف الشخصي</h3>
+            <div class="form-group"><label>الاسم</label><input type="text" value="مستخدم"></div>
+            <div class="form-group"><label>السيرة الذاتية</label><input type="text" value="⚡ مطور ويب"></div>
+            <div class="form-group"><label>الموقع</label><input type="text" value="القاهرة، مصر"></div>
+            <button class="btn btn-primary">حفظ التغييرات</button>
+        </div>
+        <div class="settings-section">
+            <h3>التفضيلات</h3>
+            <div class="preference-item">
+                <div class="info"><h4>الوضع الليلي</h4><p>تفعيل الوضع المظلم للتطبيق</p></div>
+                <div class="toggle-switch active" onclick="this.classList.toggle('active')"><div class="toggle-dot"></div></div>
+            </div>
+            <div class="preference-item">
+                <div class="info"><h4>الإشعارات الصوتية</h4><p>تشغيل الأصوات عند الإشعارات</p></div>
+                <div class="toggle-switch" onclick="this.classList.toggle('active')"><div class="toggle-dot"></div></div>
+            </div>
+            <div class="preference-item">
+                <div class="info"><h4>اللغة</h4><p>اختر لغة الواجهة</p></div>
+                <select style="width:120px;"><option value="ar">العربية</option><option value="en">English</option></select>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+</body>
+</html>

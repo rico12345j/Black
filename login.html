@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔑 تسجيل الدخول — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            padding: 20px;
+        }
+        .auth-container {
+            max-width: 400px;
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            box-shadow: var(--shadow);
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .auth-logo i {
+            font-size: 48px;
+            color: var(--text-primary);
+        }
+        .auth-logo h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+        .auth-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .auth-form .form-group {
+            margin-bottom: 16px;
+        }
+        .auth-form label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .auth-form input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+            font-family: var(--font);
+        }
+        .auth-form input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        .auth-form .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .auth-form .form-options a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .auth-form .form-options a:hover {
+            color: var(--accent-hover);
+        }
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .auth-footer {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+        .auth-footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-footer a:hover {
+            color: var(--accent-hover);
+        }
+        .social-btn {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font);
+            margin-bottom: 8px;
+        }
+        .social-btn:hover {
+            background: var(--bg-tertiary);
+        }
+        .social-btn.github-btn {
+            color: var(--text-primary);
+        }
+        .social-btn.google-btn {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <i class="fab fa-github"></i>
+                <h1>GitHub</h1>
+            </div>
+            <h2 class="auth-title">تسجيل الدخول</h2>
+            <p class="auth-subtitle">سجل الدخول إلى حسابك للوصول إلى جميع الميزات</p>
+
+            <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); loginUser();">
+                <div class="form-group">
+                    <label for="loginUsername">اسم المستخدم أو البريد الإلكتروني</label>
+                    <input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم أو البريد الإلكتروني" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">كلمة المرور</label>
+                    <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe"> تذكرني
+                    </label>
+                    <a href="/forgot-password">نسيت كلمة المرور؟</a>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">تسجيل الدخول</button>
+            </form>
+
+            <div class="auth-divider">أو</div>
+
+            <button class="social-btn github-btn" onclick="loginWithGitHub()">
+                <i class="fab fa-github"></i> تسجيل الدخول عبر GitHub
+            </button>
+            <button class="social-btn google-btn" onclick="loginWithGoogle()">
+                <i class="fab fa-google"></i> تسجيل الدخول عبر Google
+            </button>
+
+            <div class="auth-footer">
+                ليس لديك حساب؟ <a href="/signup">إنشاء حساب جديد</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function loginUser() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!username || !password) {
+                alert('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    alert(data.message || 'فشل تسجيل الدخول');
+                }
+            } catch (error) {
+                alert('حدث خطأ أثناء تسجيل الدخول');
+            }
+        }
+
+        function loginWithGitHub() {
+            window.location.href = '/api/auth/github';
+        }
+
+        function loginWithGoogle() {
+            window.location.href = '/api/auth/google';
+        }
+    </script>
+</body>
+</html>

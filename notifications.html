@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔔 الإشعارات — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .notifications-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .notifications-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .notifications-header h1 i {
+            color: var(--accent);
+        }
+        .notifications-header .actions {
+            display: flex;
+            gap: 8px;
+        }
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .notification-item:hover {
+            background: var(--bg-hover);
+        }
+        .notification-item.unread {
+            background: rgba(88, 166, 255, 0.03);
+            border-right: 3px solid var(--accent);
+        }
+        .notification-item .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .notification-item .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .notification-item .content {
+            flex: 1;
+        }
+        .notification-item .content .text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .notification-item .content .text .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .notification-item .content .time {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .notification-item .content .repo {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .notification-item .icon {
+            font-size: 20px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .empty-notifications {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-notifications i {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo"><i class="fab fa-github"></i><span>GitHub</span></a>
+                <div class="nav-links">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="🔍 بحث..." onfocus="this.select()"></div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline"><i class="fas fa-bell"></i><span class="badge">3</span></a>
+                    <a href="/profile" class="btn btn-outline"><i class="fas fa-user"></i></a>
+                    <button onclick="logoutUser()" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="notifications-container">
+        <div class="notifications-header">
+            <h1><i class="fas fa-bell"></i> الإشعارات</h1>
+            <div class="actions">
+                <button class="btn btn-outline btn-small" onclick="markAllRead()">تحديد الكل كمقروء</button>
+                <button class="btn btn-outline btn-small" onclick="clearAll()">مسح الكل</button>
+            </div>
+        </div>
+
+        <div id="notificationsList">
+            <!-- سيتم عرض الإشعارات هنا -->
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links"><a href="#">الشروط</a><a href="#">الخصوصية</a><a href="#">الأمان</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        const notifications = [
+            { id: 1, type: 'star', text: 'قام <span class="highlight">Ahmed</span> بإضافة نجمة إلى مستودعك <span class="highlight">react-app</span>', time: 'منذ 5 دقائق', repo: 'react-app', read: false, icon: 'fa-star' },
+            { id: 2, type: 'comment', text: 'علق <span class="highlight">Sara</span> على قضيتك <span class="highlight">#42</span>', time: 'منذ ساعة', repo: 'react-app', read: false, icon: 'fa-comment' },
+            { id: 3, type: 'pull', text: 'تم دمج طلب السحب <span class="highlight">#38</span> من <span class="highlight">Mohamed</span>', time: 'منذ 3 ساعات', repo: 'react-app', read: false, icon: 'fa-code-branch' },
+            { id: 4, type: 'issue', text: 'فتح <span class="highlight">Ali</span> قضية جديدة <span class="highlight">#45</span>', time: 'منذ يوم', repo: 'react-app', read: true, icon: 'fa-exclamation-circle' },
+            { id: 5, type: 'follow', text: 'بدأ <span class="highlight">Nora</span> في متابعتك', time: 'منذ يومين', repo: '', read: true, icon: 'fa-user-plus' }
+        ];
+
+        function renderNotifications() {
+            const container = document.getElementById('notificationsList');
+            if (!container) return;
+
+            if (notifications.length === 0) {
+                container.innerHTML = `<div class="empty-notifications"><i class="fas fa-bell-slash"></i><p>لا توجد إشعارات</p></div>`;
+                return;
+            }
+
+            container.innerHTML = notifications.map(n => `
+                <div class="notification-item ${n.read ? '' : 'unread'}" onclick="markRead(${n.id})">
+                    <div class="avatar"><img src="https://ui-avatars.com/api/?name=${n.text.match(/<span[^>]*>([^<]*)<\/span>/)?.[1] || 'U'}" alt="User"></div>
+                    <div class="content">
+                        <div class="text">${n.text}</div>
+                        <div class="time">${n.time}</div>
+                        ${n.repo ? `<div class="repo">📂 ${n.repo}</div>` : ''}
+                    </div>
+                    <div class="icon"><i class="fas ${n.icon}"></i></div>
+                </div>
+            `).join('');
+        }
+
+        function markRead(id) {
+            const notif = notifications.find(n => n.id === id);
+            if (notif) notif.read = true;
+            renderNotifications();
+        }
+
+        function markAllRead() {
+            notifications.forEach(n => n.read = true);
+            renderNotifications();
+            alert('✅ تم تحديد جميع الإشعارات كمقروءة');
+        }
+
+        function clearAll() {
+            if (confirm('🗑️ هل أنت متأكد من مسح جميع الإشعارات؟')) {
+                notifications.length = 0;
+                renderNotifications();
+                alert('✅ تم مسح جميع الإشعارات');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderNotifications);
+        window.markRead = markRead; window.markAllRead = markAllRead; window.clearAll = clearAll;
+    </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 GitHub Copilot — الذكاء الاصطناعي للبرمجة</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .copilot-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .copilot-hero {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .copilot-hero .copilot-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .copilot-hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+        }
+        .copilot-hero p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 12px auto 24px;
+        }
+        .copilot-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .copilot-feature {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: var(--transition);
+        }
+        .copilot-feature:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .copilot-feature .feature-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .copilot-feature h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .copilot-feature p {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .copilot-demo {
+            margin-top: 32px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+        .copilot-demo .demo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .copilot-demo .demo-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .copilot-demo .demo-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            resize: vertical;
+            min-height: 100px;
+            outline: none;
+        }
+        .copilot-demo .demo-input:focus {
+            border-color: var(--accent);
+        }
+        .copilot-demo .demo-suggestion {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius);
+            border-right: 3px solid var(--accent);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            min-height: 60px;
+        }
+        .copilot-demo .demo-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="copilot-container">
+        <div class="copilot-hero">
+            <div class="copilot-icon">🤖</div>
+            <h1>GitHub Copilot</h1>
+            <p>مساعد البرمجة الذكي الذي يكتب الكود بدلاً منك. احصل على اقتراحات ذكية في الوقت الفعلي.</p>
+            <button class="btn btn-primary btn-large" onclick="tryCopilot()">
+                <i class="fas fa-rocket"></i> جرب Copilot الآن
+            </button>
+        </div>
+
+        <div class="copilot-features">
+            <div class="copilot-feature">
+                <div class="feature-icon">⚡</div>
+                <h3>إكمال الكود الذكي</h3>
+                <p>احصل على اقتراحات كاملة للأسطر والدوال أثناء الكتابة</p>
+            </div>
+            <div class="copilot-feature">
+                <div class="feature-icon">🧠</div>
+                <h3>فهم السياق</h3>
+                <p>يفهم سياق الكود الخاص بك ويقدم اقتراحات ذات صلة</p>
+            </div>
+            <div class="copilot-feature">
+                <div class="feature-icon">🔒</div>
+                <h3>آمن وخاص</h3>
+                <p>الكود الخاص بك يبقى آمنًا، لا يتم تخزينه أو مشاركته</p>
+            </div>
+        </div>
+
+        <div class="copilot-demo">
+            <div class="demo-header">
+                <h3><i class="fas fa-robot"></i> جرب Copilot</h3>
+                <span style="font-size: 12px; color: var(--text-muted);">اكتب تعليقاً أو كوداً</span>
+            </div>
+            <textarea class="demo-input" id="copilotInput" placeholder="// اكتب تعليقاً أو كوداً هنا، مثلاً: // دالة لجمع رقمين" oninput="generateSuggestion(this.value)"></textarea>
+            <div class="demo-suggestion" id="copilotSuggestion">
+                💡 اكتب شيئاً لترى الاقتراحات...
+            </div>
+            <div class="demo-actions">
+                <button class="btn btn-primary btn-small" onclick="acceptSuggestion()">
+                    <i class="fas fa-check"></i> قبول
+                </button>
+                <button class="btn btn-outline btn-small" onclick="generateSuggestion(document.getElementById('copilotInput').value)">
+                    <i class="fas fa-sync"></i> اقتراح آخر
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        const suggestions = {
+            'دالة لجمع رقمين': 'function add(a, b) {\n    return a + b;\n}',
+            'دالة لطباعة رسالة': 'function printMessage(msg) {\n    console.log(msg);\n}',
+            'صفيف': 'const arr = [1, 2, 3, 4, 5];',
+            'حلقة': 'for (let i = 0; i < 10; i++) {\n    console.log(i);\n}',
+            'دالة': 'function hello() {\n    console.log("Hello, World!");\n}',
+        };
+
+        function generateSuggestion(input) {
+            const output = document.getElementById('copilotSuggestion');
+            const trimmed = input.trim();
+            
+            if (!trimmed) {
+                output.innerHTML = '💡 اكتب شيئاً لترى الاقتراحات...';
+                return;
+            }
+
+            let found = false;
+            for (const [key, value] of Object.entries(suggestions)) {
+                if (trimmed.includes(key) || key.includes(trimmed)) {
+                    output.innerHTML = `<span style="color: var(--text-primary);">${value}</span>`;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                output.innerHTML = `
+                    <span style="color: var(--text-muted);">🤔 جاري التفكير...</span>
+                    <br><span style="color: var(--text-secondary); font-size: 13px;">// function ${trimmed.replace(/\s+/g, '_')}() {\n//     // TODO: أضف منطقك هنا\n// }</span>
+                `;
+            }
+        }
+
+        function acceptSuggestion() {
+            const suggestion = document.getElementById('copilotSuggestion').textContent;
+            if (suggestion && !suggestion.includes('💡')) {
+                const input = document.getElementById('copilotInput');
+                input.value += '\n' + suggestion;
+                alert('✅ تم قبول الاقتراح!');
+            }
+        }
+
+        function tryCopilot() {
+            document.getElementById('copilotInput').focus();
+            document.getElementById('copilotInput').value = '// دالة لجمع رقمين';
+            generateSuggestion('// دالة لجمع رقمين');
+            alert('🤖 Copilot جاهز! اكتب كوداً لترى الاقتراحات.');
+        }
+    </script>
+</body>
+</html>

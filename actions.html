@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 GitHub Actions — أتمتة سير العمل</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .actions-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .actions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .actions-header h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+        .actions-header h1 i {
+            color: var(--accent);
+        }
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .workflow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .workflow-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .workflow-card .workflow-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .workflow-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .workflow-card p {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .workflow-card .workflow-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+        .workflow-card .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .workflow-card .status-dot.success { background: var(--success); }
+        .workflow-card .status-dot.failed { background: var(--danger); }
+        .workflow-card .status-dot.running { background: var(--warning); animation: pulse 1s infinite; }
+        .workflow-card .status-dot.pending { background: var(--text-muted); }
+        .empty-actions {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-actions i {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="actions-container">
+        <div class="actions-header">
+            <h1><i class="fas fa-rocket"></i> GitHub Actions</h1>
+            <button class="btn btn-primary" onclick="createWorkflow()">
+                <i class="fas fa-plus"></i> إنشاء سير عمل جديد
+            </button>
+        </div>
+
+        <div class="workflow-grid" id="workflowGrid">
+            <div class="workflow-card">
+                <div class="workflow-icon">📦</div>
+                <h3>CI/CD Pipeline</h3>
+                <p>بناء واختبار ونشر التطبيق تلقائياً</p>
+                <div class="workflow-status">
+                    <span class="status-dot success"></span>
+                    <span>آخر تشغيل: ناجح</span>
+                    <span style="margin-right: auto; color: var(--text-muted);">منذ 2 دقيقة</span>
+                </div>
+            </div>
+
+            <div class="workflow-card">
+                <div class="workflow-icon">🧪</div>
+                <h3>اختبارات تلقائية</h3>
+                <p>تشغيل اختبارات الوحدة والتكامل</p>
+                <div class="workflow-status">
+                    <span class="status-dot running"></span>
+                    <span>جاري التشغيل...</span>
+                    <span style="margin-right: auto; color: var(--text-muted);">منذ 5 دقيقة</span>
+                </div>
+            </div>
+
+            <div class="workflow-card">
+                <div class="workflow-icon">🔒</div>
+                <h3>فحص الأمان</h3>
+                <p>تحليل الثغرات الأمنية في الكود</p>
+                <div class="workflow-status">
+                    <span class="status-dot failed"></span>
+                    <span>فشل</span>
+                    <span style="margin-right: auto; color: var(--text-muted);">منذ 1 ساعة</span>
+                </div>
+            </div>
+
+            <div class="workflow-card">
+                <div class="workflow-icon">📄</div>
+                <h3>توليد التوثيق</h3>
+                <p>إنشاء توثيق API تلقائياً</p>
+                <div class="workflow-status">
+                    <span class="status-dot pending"></span>
+                    <span>في الانتظار</span>
+                    <span style="margin-right: auto; color: var(--text-muted);">منذ 3 ساعات</span>
+                </div>
+            </div>
+
+            <div class="workflow-card" onclick="createWorkflow()">
+                <div class="workflow-icon">➕</div>
+                <h3>سير عمل جديد</h3>
+                <p>أنشئ سير عمل مخصصاً</p>
+                <div class="workflow-status" style="border-top: none; margin-top: 8px;">
+                    <span style="color: var(--accent);">انقر للإنشاء →</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        function createWorkflow() {
+            alert('🚀 سيتم فتح محرر إنشاء سير عمل جديد');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ إعدادات المستودع — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .settings-container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+        .settings-header { margin-bottom: 24px; }
+        .settings-header h1 { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .settings-header h1 i { color: var(--accent); }
+        .settings-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+        .settings-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .settings-section .form-group { margin-bottom: 12px; }
+        .settings-section label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .settings-section input, .settings-section textarea, .settings-section select { width: 100%; padding: 8px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius); color: var(--text-primary); font-size: 14px; font-family: var(--font); outline: none; transition: var(--transition); }
+        .settings-section input:focus, .settings-section textarea:focus, .settings-section select:focus { border-color: var(--accent); }
+        .settings-section .danger-zone { border: 1px solid var(--danger); border-radius: var(--radius); padding: 16px; background: rgba(248, 81, 73, 0.05); margin-top: 12px; }
+        .settings-section .danger-zone h4 { color: var(--danger); font-size: 14px; }
+        .settings-section .danger-zone p { font-size: 13px; color: var(--text-secondary); }
+        .settings-section .danger-zone .btn-danger { background: var(--danger); color: #fff; border: none; padding: 6px 16px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); }
+        .settings-section .danger-zone .btn-danger:hover { background: #da3633; }
+        .settings-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; flex-wrap: wrap; }
+        .settings-tab { padding: 8px 16px; color: var(--text-secondary); text-decoration: none; font-weight: 600; font-size: 14px; border-bottom: 2px solid transparent; transition: var(--transition); }
+        .settings-tab:hover { color: var(--text-primary); }
+        .settings-tab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo"><i class="fab fa-github"></i><span>GitHub</span></a>
+                <div class="nav-links">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="🔍 بحث..." onfocus="this.select()"></div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline"><i class="fas fa-bell"></i><span class="badge">0</span></a>
+                    <a href="/profile" class="btn btn-outline"><i class="fas fa-user"></i></a>
+                    <button onclick="logoutUser()" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1><i class="fas fa-cog"></i> إعدادات المستودع</h1>
+        </div>
+
+        <div class="settings-tabs">
+            <a href="#" class="settings-tab active">عام</a>
+            <a href="#" class="settings-tab">التعاون</a>
+            <a href="#" class="settings-tab">الأمان</a>
+            <a href="#" class="settings-tab">الإجراءات</a>
+            <a href="#" class="settings-tab">متقدم</a>
+        </div>
+
+        <div class="settings-section">
+            <h3>معلومات المستودع</h3>
+            <div class="form-group">
+                <label>اسم المستودع</label>
+                <input type="text" value="my-awesome-project">
+            </div>
+            <div class="form-group">
+                <label>الوصف</label>
+                <textarea rows="2">هذا مستودع رائع لمشروعي</textarea>
+            </div>
+            <div class="form-group">
+                <label>الرؤية</label>
+                <select>
+                    <option value="public">عام</option>
+                    <option value="private" selected>خاص</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">حفظ التغييرات</button>
+        </div>
+
+        <div class="settings-section">
+            <h3>الفرع الافتراضي</h3>
+            <div class="form-group">
+                <label>الفرع</label>
+                <select>
+                    <option value="main">main</option>
+                    <option value="develop">develop</option>
+                    <option value="master">master</option>
+                </select>
+            </div>
+            <button class="btn btn-primary">تحديث الفرع</button>
+        </div>
+
+        <div class="settings-section">
+            <div class="danger-zone">
+                <h4>⚠️ منطقة الخطر</h4>
+                <p>حذف هذا المستودع نهائياً. لا يمكن التراجع عن هذا الإجراء.</p>
+                <button class="btn-danger" onclick="confirmDelete()">حذف المستودع</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links"><a href="#">الشروط</a><a href="#">الخصوصية</a><a href="#">الأمان</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        function confirmDelete() {
+            if (confirm('⚠️ هل أنت متأكد من حذف هذا المستودع؟ هذا الإجراء لا يمكن التراجع عنه!')) {
+                if (confirm('تأكيد نهائي: أدخل اسم المستودع لتأكيد الحذف')) {
+                    alert('✅ تم حذف المستودع');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐛 القضايا — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .issues-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+        .issues-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .issues-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .issues-header h1 i {
+            color: var(--accent);
+        }
+        .issues-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .issues-filters .filter-btn {
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 13px;
+            transition: var(--transition);
+            font-family: var(--font);
+        }
+        .issues-filters .filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
+        .issues-filters .filter-btn.active {
+            background: var(--accent);
+            color: var(--text-inverse);
+            border-color: var(--accent);
+        }
+        .issues-filters .filter-search {
+            flex: 1;
+            min-width: 150px;
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-family: var(--font);
+            outline: none;
+        }
+        .issues-filters .filter-search:focus {
+            border-color: var(--accent);
+        }
+        .issue-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .issue-item:hover {
+            background: var(--bg-hover);
+            margin: 0 -12px;
+            padding: 12px;
+            border-radius: var(--radius);
+        }
+        .issue-item .issue-icon {
+            font-size: 18px;
+            margin-top: 2px;
+        }
+        .issue-item .issue-icon.open {
+            color: var(--success);
+        }
+        .issue-item .issue-icon.closed {
+            color: var(--danger);
+        }
+        .issue-item .issue-content {
+            flex: 1;
+        }
+        .issue-item .issue-content .issue-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .issue-item .issue-content .issue-title:hover {
+            color: var(--accent);
+        }
+        .issue-item .issue-content .issue-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .issue-item .issue-content .issue-meta .author {
+            font-weight: 600;
+        }
+        .issue-item .issue-content .issue-labels {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .issue-item .issue-content .issue-label {
+            font-size: 11px;
+            padding: 1px 8px;
+            border-radius: 20px;
+            color: var(--text-inverse);
+        }
+        .issue-item .issue-comments {
+            color: var(--text-muted);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .empty-issues {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-issues i {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .new-issue-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        @media (max-width: 600px) {
+            .issues-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .issues-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .issue-item {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="issues-container">
+        <div class="issues-header">
+            <h1><i class="fas fa-exclamation-circle"></i> القضايا</h1>
+            <button class="btn btn-primary new-issue-btn" onclick="createIssue()">
+                <i class="fas fa-plus"></i> قضية جديدة
+            </button>
+        </div>
+
+        <div class="issues-filters">
+            <button class="filter-btn active" onclick="filterIssues('all', this)">الكل</button>
+            <button class="filter-btn" onclick="filterIssues('open', this)">مفتوحة</button>
+            <button class="filter-btn" onclick="filterIssues('closed', this)">مغلقة</button>
+            <input type="text" class="filter-search" id="issueSearch" placeholder="🔍 بحث في القضايا..." oninput="searchIssues(this.value)">
+            <select class="filter-btn" style="background: var(--bg-tertiary);" onchange="sortIssues(this.value)">
+                <option value="newest">الأحدث</option>
+                <option value="oldest">الأقدم</option>
+                <option value="most-commented">الأكثر تعليقاً</option>
+            </select>
+        </div>
+
+        <div id="issuesList">
+            <!-- سيتم عرض القضايا هنا -->
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script>
+        // ===== بيانات وهمية للقضايا =====
+        const issuesData = [
+            {
+                id: 1,
+                title: 'خلل في زر تسجيل الدخول',
+                number: 42,
+                state: 'open',
+                author: 'ahmed-dev',
+                authorAvatar: 'https://ui-avatars.com/api/?name=Ahmed',
+                createdAt: 'منذ ساعتين',
+                comments: 5,
+                labels: [
+                    { name: 'bug', color: 'd73a4a' },
+                    { name: 'priority-high', color: 'b60205' }
+                ]
+            },
+            {
+                id: 2,
+                title: 'تحسين أداء الصفحة الرئيسية',
+                number: 41,
+                state: 'open',
+                author: 'sara-coder',
+                authorAvatar: 'https://ui-avatars.com/api/?name=Sara',
+                createdAt: 'منذ 5 ساعات',
+                comments: 3,
+                labels: [
+                    { name: 'enhancement', color: 'a2eeef' }
+                ]
+            },
+            {
+                id: 3,
+                title: 'إضافة توثيق للـ API',
+                number: 40,
+                state: 'closed',
+                author: 'mohamed-dev',
+                authorAvatar: 'https://ui-avatars.com/api/?name=Mohamed',
+                createdAt: 'منذ يومين',
+                comments: 8,
+                labels: [
+                    { name: 'documentation', color: '0075ca' },
+                    { name: 'good-first-issue', color: '7057ff' }
+                ]
+            },
+            {
+                id: 4,
+                title: 'مشكلة في عرض الصور على الجوال',
+                number: 39,
+                state: 'open',
+                author: 'nora-designer',
+                authorAvatar: 'https://ui-avatars.com/api/?name=Nora',
+                createdAt: 'منذ 3 أيام',
+                comments: 2,
+                labels: [
+                    { name: 'bug', color: 'd73a4a' },
+                    { name: 'mobile', color: '006b75' }
+                ]
+            },
+            {
+                id: 5,
+                title: 'طلب ميزة: وضع ليلي تلقائي',
+                number: 38,
+                state: 'closed',
+                author: 'ali-developer',
+                authorAvatar: 'https://ui-avatars.com/api/?name=Ali',
+                createdAt: 'منذ أسبوع',
+                comments: 12,
+                labels: [
+                    { name: 'enhancement', color: 'a2eeef' },
+                    { name: 'help-wanted', color: '008672' }
+                ]
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // ===== عرض القضايا =====
+        function renderIssues(issues) {
+            const container = document.getElementById('issuesList');
+            if (!container) return;
+
+            if (!issues || issues.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-issues">
+                        <i class="fas fa-inbox"></i>
+                        <p>لا توجد قضايا</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = issues.map(issue => `
+                <div class="issue-item" data-state="${issue.state}">
+                    <div class="issue-icon ${issue.state}">
+                        <i class="fas ${issue.state === 'open' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                    </div>
+                    <div class="issue-content">
+                        <a href="/issues/${issue.number}" class="issue-title">${issue.title}</a>
+                        <div class="issue-meta">
+                            <span class="author">${issue.author}</span>
+                            فتح ${issue.createdAt} · #${issue.number}
+                        </div>
+                        <div class="issue-labels">
+                            ${issue.labels.map(label => `
+                                <span class="issue-label" style="background-color: #${label.color}">${label.name}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="issue-comments">
+                        <i class="fas fa-comment"></i> ${issue.comments}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ===== تصفية القضايا =====
+        function filterIssues(filter, btn) {
+            currentFilter = filter;
+            
+            // تحديث الأزرار
+            document.querySelectorAll('.issues-filters .filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            applyFilters();
+        }
+
+        // ===== البحث في القضايا =====
+        function searchIssues(query) {
+            currentSearch = query.toLowerCase().trim();
+            applyFilters();
+        }
+
+        // ===== تطبيق الفلترة =====
+        function applyFilters() {
+            let filtered = [...issuesData];
+
+            // تصفية حسب الحالة
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(i => i.state === currentFilter);
+            }
+
+            // تصفية حسب البحث
+            if (currentSearch) {
+                filtered = filtered.filter(i => 
+                    i.title.toLowerCase().includes(currentSearch) ||
+                    i.author.includes(currentSearch) ||
+                    i.labels.some(l => l.name.includes(currentSearch))
+                );
+            }
+
+            renderIssues(filtered);
+        }
+
+        // ===== ترتيب القضايا =====
+        function sortIssues(order) {
+            const sorted = [...issuesData];
+            switch(order) {
+                case 'newest':
+                    sorted.sort((a, b) => a.id - b.id);
+                    break;
+                case 'oldest':
+                    sorted.sort((a, b) => b.id - a.id);
+                    break;
+                case 'most-commented':
+                    sorted.sort((a, b) => b.comments - a.comments);
+                    break;
+            }
+            renderIssues(sorted);
+        }
+
+        // ===== إنشاء قضية جديدة =====
+        function createIssue() {
+            alert('📝 سيتم فتح نموذج إنشاء قضية جديدة');
+        }
+
+        // ===== التهيئة =====
+        document.addEventListener('DOMContentLoaded', function() {
+            renderIssues(issuesData);
+        });
+
+        // ===== تصدير للاستخدام =====
+        window.filterIssues = filterIssues;
+        window.searchIssues = searchIssues;
+        window.sortIssues = sortIssues;
+        window.createIssue = createIssue;
+    </script>
+</body>
+</html>

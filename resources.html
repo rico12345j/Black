@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 الموارد — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .resources-container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+        .resources-header { margin-bottom: 24px; }
+        .resources-header h1 { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .resources-header h1 i { color: var(--accent); }
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .resource-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; transition: var(--transition); cursor: pointer; }
+        .resource-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .resource-card .icon { font-size: 36px; margin-bottom: 8px; }
+        .resource-card h3 { font-size: 16px; font-weight: 700; }
+        .resource-card p { color: var(--text-secondary); font-size: 13px; }
+        .resource-card .tag { display: inline-block; padding: 2px 10px; background: var(--bg-tertiary); border-radius: 20px; font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">...</nav>
+    <div class="resources-container">
+        <div class="resources-header"><h1><i class="fas fa-book"></i> الموارد</h1></div>
+        <div class="resources-grid">
+            <div class="resource-card" onclick="window.open('https://docs.github.com')">
+                <div class="icon">📖</div>
+                <h3>توثيق GitHub</h3>
+                <p>دليل شامل لاستخدام GitHub ومنصته</p>
+                <span class="tag">وثائق</span>
+            </div>
+            <div class="resource-card" onclick="window.open('https://github.com/features')">
+                <div class="icon">🚀</div>
+                <h3>ميزات GitHub</h3>
+                <p>استكشف جميع الميزات المتاحة على المنصة</p>
+                <span class="tag">ميزات</span>
+            </div>
+            <div class="resource-card" onclick="window.open('https://github.com/community')">
+                <div class="icon">👥</div>
+                <h3>المجتمع</h3>
+                <p>انضم إلى مجتمع المطورين العالمي</p>
+                <span class="tag">مجتمع</span>
+            </div>
+            <div class="resource-card" onclick="window.open('https://github.com/education')">
+                <div class="icon">🎓</div>
+                <h3>GitHub Education</h3>
+                <p>موارد تعليمية للطلاب والمعلمين</p>
+                <span class="tag">تعليم</span>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+</body>
+</html>

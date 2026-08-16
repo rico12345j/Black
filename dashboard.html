@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 لوحة التحكم — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- ===== شريط التنقل ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-left">
+                <a href="/" class="nav-logo">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="/dashboard" class="nav-link active">لوحة التحكم</a>
+                    <a href="/explore" class="nav-link">استكشاف</a>
+                    <a href="/trending" class="nav-link">الأكثر شيوعاً</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="🔍 بحث..." onfocus="this.select()">
+                </div>
+                <div class="nav-actions">
+                    <a href="/notifications" class="btn btn-outline">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </a>
+                    <a href="/profile" class="btn btn-outline">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button onclick="logoutUser()" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <div class="container">
+        <div class="dashboard-grid">
+            <!-- ===== الشريط الجانبي ===== -->
+            <aside class="sidebar">
+                <div class="sidebar-user">
+                    <img src="https://ui-avatars.com/api/?name=User&background=2d9cdb&color=fff&size=128" alt="User" class="sidebar-avatar">
+                    <div class="sidebar-user-info">
+                        <h4 id="userName">مستخدم</h4>
+                        <span id="userUsername">@username</span>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <a href="/dashboard" class="sidebar-menu-item active">
+                        <i class="fas fa-home"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                    <a href="/repos" class="sidebar-menu-item">
+                        <i class="fas fa-book"></i>
+                        <span>المستودعات</span>
+                    </a>
+                    <a href="/issues" class="sidebar-menu-item">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>القضايا</span>
+                    </a>
+                    <a href="/pulls" class="sidebar-menu-item">
+                        <i class="fas fa-code-branch"></i>
+                        <span>طلبات السحب</span>
+                    </a>
+                    <a href="/projects" class="sidebar-menu-item">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>المشاريع</span>
+                    </a>
+                    <a href="/settings" class="sidebar-menu-item">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- ===== المحتوى الرئيسي ===== -->
+            <main class="dashboard-main">
+                <!-- ===== الإحصائيات ===== -->
+                <div class="stats-grid-small">
+                    <div class="stat-card">
+                        <div class="stat-number" id="reposCount">0</div>
+                        <div class="stat-label">المستودعات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="followersCount">0</div>
+                        <div class="stat-label">المتابعون</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="starsCount">0</div>
+                        <div class="stat-label">النجوم</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="issuesCount">0</div>
+                        <div class="stat-label">القضايا</div>
+                    </div>
+                </div>
+
+                <!-- ===== القضايا الأخيرة ===== -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-exclamation-circle"></i> القضايا الأخيرة</h3>
+                        <a href="/issues" class="btn btn-outline">عرض الكل</a>
+                    </div>
+                    <div id="recentIssues">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>لا توجد قضايا</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== طلبات السحب الأخيرة ===== -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-code-branch"></i> طلبات السحب الأخيرة</h3>
+                        <a href="/pulls" class="btn btn-outline">عرض الكل</a>
+                    </div>
+                    <div id="recentPulls">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>لا توجد طلبات سحب</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== المستودعات المفضلة ===== -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-star"></i> المستودعات المفضلة</h3>
+                        <a href="/repos" class="btn btn-outline">عرض الكل</a>
+                    </div>
+                    <div id="starredRepos">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>لا توجد مستودعات مفضلة</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ===== التذييل ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <span>© 2024 GitHub Clone. جميع الحقوق محفوظة.</span>
+                <div class="footer-links">
+                    <a href="#">الشروط</a>
+                    <a href="#">الخصوصية</a>
+                    <a href="#">الأمان</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

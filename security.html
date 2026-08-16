@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 الأمان — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .security-container { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+        .security-header { margin-bottom: 24px; }
+        .security-header h1 { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 12px; }
+        .security-header h1 i { color: var(--accent); }
+        .security-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 16px; }
+        .security-card h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+        .security-card h3 i { color: var(--accent); }
+        .security-card p { color: var(--text-secondary); font-size: 14px; margin: 4px 0 12px; }
+        .security-card .status { display: inline-block; padding: 2px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .security-card .status.secure { background: rgba(63, 185, 80, 0.1); color: var(--success); }
+        .security-card .status.warning { background: rgba(210, 153, 34, 0.1); color: var(--warning); }
+        .security-card .status.danger { background: rgba(248, 81, 73, 0.1); color: var(--danger); }
+        .security-card .btn { margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">...</nav>
+    <div class="security-container">
+        <div class="security-header"><h1><i class="fas fa-shield-alt"></i> الأمان</h1></div>
+        <div class="security-card">
+            <h3><i class="fas fa-key"></i> المصادقة الثنائية (2FA)</h3>
+            <p>أضف طبقة إضافية من الأمان لحسابك</p>
+            <span class="status warning">⚠️ غير مفعل</span>
+            <button class="btn btn-primary" onclick="alert('🔐 تفعيل المصادقة الثنائية')">تفعيل</button>
+        </div>
+        <div class="security-card">
+            <h3><i class="fas fa-code-branch"></i> مفاتيح SSH</h3>
+            <p>أضف مفاتيح SSH للاتصال الآمن بالمستودعات</p>
+            <span class="status secure">✅ 2 مفتاح نشط</span>
+            <button class="btn btn-outline" onclick="alert('🔑 إدارة مفاتيح SSH')">إدارة</button>
+        </div>
+        <div class="security-card">
+            <h3><i class="fas fa-eye"></i> الرؤية</h3>
+            <p>تحكم في من يمكنه رؤية مستودعاتك</p>
+            <span class="status secure">🟢 خاص</span>
+            <button class="btn btn-outline" onclick="alert('⚙️ تغيير الرؤية')">تغيير</button>
+        </div>
+        <div class="security-card">
+            <h3><i class="fas fa-history"></i> سجل الدخول</h3>
+            <p>مراجعة جميع جلسات الدخول الأخيرة</p>
+            <span class="status secure">✅ 3 جلسات نشطة</span>
+            <button class="btn btn-outline" onclick="alert('📋 عرض سجل الدخول')">عرض</button>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+</body>
+</html>

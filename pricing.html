@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 التسعير — GitHub Clone</title>
+    <link rel="icon" href="/assets/icons/github.svg">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .pricing-container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+        .pricing-header { text-align: center; margin-bottom: 40px; }
+        .pricing-header h1 { font-size: 36px; font-weight: 900; }
+        .pricing-header p { color: var(--text-secondary); font-size: 18px; margin-top: 8px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+        .pricing-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center; transition: var(--transition); }
+        .pricing-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .pricing-card.popular { border-color: var(--accent); position: relative; }
+        .pricing-card.popular::before { content: 'الأكثر شيوعاً'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; padding: 2px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .pricing-card .plan-name { font-size: 20px; font-weight: 700; }
+        .pricing-card .price { font-size: 40px; font-weight: 900; margin: 12px 0; }
+        .pricing-card .price span { font-size: 16px; font-weight: 400; color: var(--text-secondary); }
+        .pricing-card .features { list-style: none; text-align: right; padding: 0; margin: 16px 0; }
+        .pricing-card .features li { padding: 6px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .pricing-card .features li i { color: var(--success); width: 18px; }
+        .pricing-card .features li .muted { color: var(--text-muted); }
+        .pricing-card .btn { width: 100%; justify-content: center; }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="container">...</div></nav>
+    <div class="pricing-container">
+        <div class="pricing-header">
+            <h1>💰 خطط التسعير</h1>
+            <p>اختر الخطة المناسبة لك ولفريقك</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="plan-name">مجاني</div>
+                <div class="price">0<span>$</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> مستودعات عامة غير محدودة</li>
+                    <li><i class="fas fa-check"></i> 500MB مساحة تخزين</li>
+                    <li><i class="fas fa-check"></i> 2000 دقيقة Actions</li>
+                    <li><i class="fas fa-check"></i> دعم المجتمع</li>
+                    <li><i class="fas fa-times muted"></i> مستودعات خاصة</li>
+                    <li><i class="fas fa-times muted"></i> GitHub Copilot</li>
+                </ul>
+                <a href="/signup" class="btn btn-outline">ابدأ الآن</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="plan-name">احترافي</div>
+                <div class="price">12<span>$</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> مستودعات خاصة غير محدودة</li>
+                    <li><i class="fas fa-check"></i> 2GB مساحة تخزين</li>
+                    <li><i class="fas fa-check"></i> 3000 دقيقة Actions</li>
+                    <li><i class="fas fa-check"></i> GitHub Copilot</li>
+                    <li><i class="fas fa-check"></i> دعم الأولوية</li>
+                    <li><i class="fas fa-check"></i> تحليلات متقدمة</li>
+                </ul>
+                <a href="/signup" class="btn btn-primary">ابدأ الآن</a>
+            </div>
+            <div class="pricing-card">
+                <div class="plan-name">فريق</div>
+                <div class="price">24<span>$</span></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> كل ميزات الاحترافي</li>
+                    <li><i class="fas fa-check"></i> 5GB مساحة تخزين</li>
+                    <li><i class="fas fa-check"></i> 5000 دقيقة Actions</li>
+                    <li><i class="fas fa-check"></i> إدارة الفريق</li>
+                    <li><i class="fas fa-check"></i> SAML/SSO</li>
+                    <li><i class="fas fa-check"></i> دعم 24/7</li>
+                </ul>
+                <a href="/signup" class="btn btn-outline">ابدأ الآن</a>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">...</footer>
+    <script src="/js/script.js"></script>
+</body>
+</html>
